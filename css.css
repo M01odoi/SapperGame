@@ -1,10 +1,23 @@
-body{
+body {
     background-color: #810e22;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
 }
-table{
+
+table {
     margin: 0 auto;
-}table, th, td {
-     border: 1px solid black;
-     border-collapse: collapse;
- }
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.gameOver{
+    background-color: rgba(174, 214, 169, 0.5);
+    font-size: 50px;
+    position: relative;
+    top: -150px;
+    text-align: center;
+}
