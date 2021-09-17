@@ -1,16 +1,14 @@
-console.log('sssssssapper');
-console.log('kak');
-
 function createTable(level) {
     let table = document.createElement('table');
+    countCell = level*10;
+    let countBomb = level*15;
     if (level === 1) {
-        let countBomb = 15;
         let mas = randomBomb(countBomb);
         console.log(mas);
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < countCell; i++) {
             let tr = document.createElement('tr');
             table.append(tr);
-            for (let q = 0; q < 10; q++) {
+            for (let q = 0; q < countCell; q++) {
                 let th = document.createElement('th');
                 th.id = `th_${i}_${q}`;
                 if (mas.includes(th.id)) {
@@ -24,13 +22,12 @@ function createTable(level) {
         }
     }
     if (level === 2) {
-        let countBomb = 25;
         let mas = randomBomb(countBomb);
         console.log(mas);
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < countCell; i++) {
             let tr = document.createElement('tr');
             table.append(tr);
-            for (let q = 0; q < 20; q++) {
+            for (let q = 0; q < countCell; q++) {
                 let th = document.createElement('th');
                 th.id = `th_${i}_${q}`;
                 if (mas.includes(th.id)) {
@@ -48,11 +45,11 @@ function createTable(level) {
     function randomBomb(countBomb) {
         let mas = [];
         for (let i = 0; i < countBomb; i++)
-            mas[i] = 'th_' + (Math.random() * 10).toFixed() + '_' + (Math.random() * 10).toFixed();
+            mas[i] = 'th_' + (Math.random() * countCell).toFixed() + '_' + (Math.random() * countCell).toFixed();
         return mas;
     }
 
-    let smileImg = smile();
+    let smileImg = smile(countBomb);
     table.onmousedown = function (event) {
         smileImg.src = './img/wow-icon.png';
     };
@@ -69,13 +66,12 @@ function createTable(level) {
             cell.style.background = 'red';
         } else {
             let count = 0;
-            let first = cell.id.slice(3, 4);
-            let second = cell.id.slice(5, 6);
-            console.log(first, second);
+            let firstSecond = cell.id.match(/\d{1,}/g);
+            let first = firstSecond[0];
+            let second = firstSecond[1];
             for (let i = -1; i < 2; i++) {
                 for (let j = -1; j < 2; j++) {
                     if (document.getElementById(`th_${+first + i}_${+second + j}`)) {
-                        console.log(`th_${+first + i}_${+second + j}`);
                         let neighbor = document.getElementById(`th_${+first + i}_${+second + j}`);
                         if (neighbor.className === 'bomb')
                             count++;
@@ -93,7 +89,6 @@ function createTable(level) {
             //         }
             //     }
             // }
-            console.log(cell);
             cell.innerText = count;
             cell.style.background = 'white';
         }
@@ -118,14 +113,29 @@ function gameOver() {
     document.body.append(banner);
 }
 
-function smile(event) {
+function smile(countBomb) {
+    let smile = document.createElement('div');
+    smile.className = 'smile';
+    smile.id = 'smile';
+
+    let showCountBomb = document.createElement('a');
+    showCountBomb.href = '';
+    showCountBomb.className = 'countBomb';
+    showCountBomb.innerText = countBomb;
+
+
     let smileImg = new Image();
     smileImg.src = './img/smile-icon.png';
     smileImg.width = 30;
     smileImg.height = 30;
-    smileImg.style.margin = '0 auto';
-    document.body.append(smileImg);
+    smile.append(showCountBomb);
+
+    let time = document.createElement('div');
+    time ='00:00';
+
+    smile.append(smileImg);
+    document.body.append(smile);
     return smileImg;
 }
 
-createTable(1);
+createTable(2);

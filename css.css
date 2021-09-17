@@ -21,3 +21,13 @@ table, th, td {
     top: -150px;
     text-align: center;
 }
+.smile{
+    margin: 0 auto;
+    display: flex;
+    font-size: 26px;
+    justify-content: space-between;
+}
+.countBomb{
+    text-decoration: none;
+    color: greenyellow;
+}
